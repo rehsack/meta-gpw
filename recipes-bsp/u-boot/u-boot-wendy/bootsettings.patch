@@ -1,0 +1,97 @@
+diff --git a/cmd/source.c b/cmd/source.c
+index a9831b6608..d0f1dfacc3 100644
+--- a/cmd/source.c
++++ b/cmd/source.c
+@@ -43,6 +43,7 @@ source (ulong addr, const char *fit_uname)
+ 	verify = env_get_yesno("verify");
+ 
+ 	buf = map_sysmem(addr, 0);
++	printf ("img format: %d\n", genimg_get_format(buf));
+ 	switch (genimg_get_format(buf)) {
+ #if defined(CONFIG_IMAGE_FORMAT_LEGACY)
+ 	case IMAGE_FORMAT_LEGACY:
+diff --git a/include/config_fallbacks.h b/include/config_fallbacks.h
+index 2c4d43d672..c1009c3052 100644
+--- a/include/config_fallbacks.h
++++ b/include/config_fallbacks.h
+@@ -96,6 +96,8 @@
+ 
+ #ifdef CONFIG_DISABLE_IMAGE_LEGACY
+ #undef CONFIG_IMAGE_FORMAT_LEGACY
++#else
++#define CONFIG_IMAGE_FORMAT_LEGACY
+ #endif
+ 
+ #ifdef CONFIG_DM_I2C
+diff --git a/include/configs/am335x_evm.h b/include/configs/am335x_evm.h
+index 856c546fc1..a7bbbc185a 100644
+--- a/include/configs/am335x_evm.h
++++ b/include/configs/am335x_evm.h
+@@ -82,13 +82,67 @@
+ 	func(PXE, pxe, na) \
+ 	func(DHCP, dhcp, na)
+ 
++#if 0
+ #include <config_distro_bootcmd.h>
++#endif
+ 
+ #ifndef CONFIG_SPL_BUILD
+ #include <environment/ti/dfu.h>
+ #include <environment/ti/mmc.h>
+ 
++#define DEFAULT_EMMC_DEV_SET \
++	"emmcdev=1\0" \
++	"sdcarddev=0\0" \
++	"mmcpart=1\0"
++
++#undef DEFAULT_LINUX_BOOT_ENV
++#define DEFAULT_LINUX_BOOT_ENV \
++	"loadaddr=0x82000000\0" \
++	"kernel_addr_r=0x82000000\0" \
++	"fdtaddr=0x88000000\0" \
++	"fdt_addr_r=0x88000000\0" \
++	"scriptaddr=0x80000000\0"
++
+ #define CONFIG_EXTRA_ENV_SETTINGS \
++	DEFAULT_LINUX_BOOT_ENV \
++        "script=bootscript\0" \
++        "console=ttyS0\0" \
++        "baudrate=115200\0" \
++        "bootargs_base=console=${console},${baudrate} oops=panic panic=5 rootwait consoleblank=0\0" \
++        DEFAULT_EMMC_DEV_SET \
++        "sdloadbootscript=" \
++                "ext2load mmc ${sdcarddev}:${mmcpart} ${scriptaddr} ${script};\0" \
++        "mmcloadbootscript=" \
++                "ext2load mmc ${emmcdev}:${mmcpart} ${scriptaddr} ${script};\0" \
++        "usbloadbootscript=" \
++                "ext2load usb 0:${mmcpart} ${scriptaddr} ${script};\0" \
++        "bootscript=echo Running bootscript ...; " \
++                "source ${scriptaddr}\0" \
++        "netboot=echo Booting from net ...; " \
++                "if test ${ip_dyn} = yes; then " \
++                        "dhcp $scriptaddr; " \
++                "fi; " \
++                "run bootscript;\0"
++#ifdef CONFIG_BOOTCOMMAND
++#undef CONFIG_BOOTCOMMAND
++#endif
++#define CONFIG_BOOTCOMMAND \
++        "mmc dev ${emmcdev};" \
++        "usb start;" \
++        "mmc rescan; " \
++        "if run sdloadbootscript; then " \
++            "run bootscript; " \
++        "else if run usbloadbootscript; then " \
++            "run bootscript; " \
++        "else if run mmcloadbootscript; then " \
++            "run bootscript; " \
++        "else " \
++            "run netboot; "\
++        "fi;" \
++        "fi;" \
++        "fi"
++
++#define TI_CONFIG_EXTRA_ENV_SETTINGS \
+ 	DEFAULT_LINUX_BOOT_ENV \
+ 	DEFAULT_MMC_TI_ARGS \
+ 	DEFAULT_FIT_TI_ARGS \

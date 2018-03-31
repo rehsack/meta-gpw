@@ -1,0 +1,9 @@
+setenv kernel @KERNEL_IMAGETYPE@
+setenv fdt_file @KERNEL_DEVICETREE@
+setenv bootargs_mmc setenv bootargs ${bootargs_base} ip=none root=/dev/@ROOT_DEV_NAME@@ROOT_DEV_SEP@2
+setenv bootcmd_mmc 'if ext2load mmc @UBOOT_MMC_DEV@:1 ${loadaddr} /${kernel}; then run bootargs_mmc; ext2load mmc @UBOOT_MMC_DEV@:1 ${fdtaddr} /${fdt_file}; bootz ${loadaddr} - ${fdtaddr}; fi'
+setenv bootargs_rec setenv bootargs ${bootargs_base} ip=none root=/dev/@ROOT_DEV_NAME@@ROOT_DEV_SEP@3
+setenv bootcmd_rec 'if ext2load mmc @UBOOT_MMC_DEV@:1 ${loadaddr} /${kernel}-@MACHINE@; then run bootargs_rec; ext2load mmc @UBOOT_MMC_DEV@:1 ${fdtaddr} /${fdt_file}; bootz ${loadaddr} - ${fdtaddr}; fi'
+mmc dev @UBOOT_MMC_DEV@
+run bootcmd_rec
+run bootcmd_mmc

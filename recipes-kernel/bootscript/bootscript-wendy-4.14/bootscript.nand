@@ -1,10 +1,8 @@
-setenv loadaddr @UBOOT_LOADADDRESS@
 setenv kernel @KERNEL_IMAGETYPE@
-setenv fdt_addr @UBOOT_FDTADDRESS@
 setenv fdt_file @KERNEL_DEVICETREE@
 setenv bootargs_nand setenv bootargs ${bootargs_base} ip=none ${bootargs_ubi} root=/dev/ubiblock0_2
-setenv bootcmd_nand 'if ubifsload ${loadaddr} /${kernel}; then ubifsload ${fdt_addr} /${fdt_file}; ubifsumount; fdt addr ${fdt_addr}; fdt resize; fdt chosen; run bootargs_nand; bootz ${loadaddr} - ${fdt_addr}; fi'
+setenv bootcmd_nand 'if ubifsload ${loadaddr} /${kernel}; then ubifsload ${fdtaddr} /${fdt_file}; ubifsumount; fdt addr ${fdtaddr}; fdt resize; fdt chosen; run bootargs_nand; bootz ${loadaddr} - ${fdtaddr}; fi'
 setenv bootargs_rec setenv bootargs ${bootargs_base} ip=none ${bootargs_ubi} root=/dev/ubiblock0_3
-setenv bootcmd_rec 'if ubifsload ${loadaddr} /${kernel}-bohr; then ubifsload ${fdt_addr} /${fdt_file}; ubifsumount; fdt addr ${fdt_addr}; fdt resize; fdt chosen; run bootargs_rec; bootz ${loadaddr} - ${fdt_addr}; fi'
+setenv bootcmd_rec 'if ubifsload ${loadaddr} /${kernel}-bohr; then ubifsload ${fdtaddr} /${fdt_file}; ubifsumount; fdt addr ${fdtaddr}; fdt resize; fdt chosen; run bootargs_rec; bootz ${loadaddr} - ${fdtaddr}; fi'
 run bootcmd_rec
 run bootcmd_nand
