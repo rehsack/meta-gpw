@@ -1,5 +1,5 @@
 setenv kernel @KERNEL_IMAGETYPE@
 setenv fdt_file @KERNEL_DEVICETREE@
-setenv bootargs_nfs setenv bootargs ${bootargs_base} ip=dhcp root=/dev/nfs ro
+setenv bootargs_nfs setenv bootargs ${bootargs_base} ip=dhcp root=/dev/nfs ro nfsroot=${rootpath},nfsvers=3
 setenv bootcmd_nfs 'run bootargs_nfs; tftp ${loadaddr} @MACHINE@/@BRANCH@/4.14/${kernel}; tftp ${fdtaddr} @MACHINE@/@BRANCH@/4.14/${fdt_file}; fdt addr ${fdtaddr}; fdt resize; fdt chosen; bootz ${loadaddr} - ${fdtaddr}'
 run bootcmd_nfs

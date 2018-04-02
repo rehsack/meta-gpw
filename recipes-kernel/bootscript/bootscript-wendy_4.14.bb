@@ -36,8 +36,9 @@ do_install () {
     sed -i -e "s/@UBOOT_LOADADDRESS[@]/${UBOOT_LOADADDRESS}/g" -e "s/@UBOOT_FDTADDRESS[@]/${UBOOT_FDTADDRESS}/g" \
            -e "s/@KERNEL_IMAGETYPE[@]/${KERNEL_IMAGETYPE}/g" -e "s/@KERNEL_DEVICETREE[@]/${KERNEL_DEVICETREE}/g" \
            -e "s/@ROOT_DEV_NAME[@]/${ROOT_DEV_NAME}/g" -e "s/@ROOT_DEV_SEP[@]/${ROOT_DEV_SEP}/g" \
-	   -e "s/@UBOOT_MMC_DEV[@]/${UBOOT_MMC_DEV}/g" -e "s/@MACHINE[@]/${MACHINE}/g" -e "s/@BRANCH[@]/${METADATA_BRANCH}/g" \
-	 ${WORKDIR}/${DEFAULT_BOOTSCRIPT}
+           -e "s/@UBOOT_MMC_DEV[@]/${UBOOT_MMC_DEV}/g" \
+           -e "s/@MACHINE[@]/${MACHINE}/g" -e "s/@BRANCH[@]/${METADATA_BRANCH}/g" \
+         ${WORKDIR}/${DEFAULT_BOOTSCRIPT}
     install -d ${D}/boot
     uboot-mkimage -T script -C none -n 'Wendy Script' -d ${WORKDIR}/${DEFAULT_BOOTSCRIPT} ${D}/boot/bootscript.${WANTED_ROOT_DEV}
 }
