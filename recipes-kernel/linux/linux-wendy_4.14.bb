@@ -15,7 +15,7 @@ DEPENDS += "lzop-native bc-native bootscript-${MACHINE}-${WANTED_ROOT_DEV}"
 RDEPENDS_${KERNEL_PACKAGE_NAME}-image_append = "\
   bootscript-${MACHINE}-${WANTED_ROOT_DEV}"
 
-REV="9861e6647c856ccf87188fce6d3ff12454de1415"
+REV="9a2e216d9e892249b63d10603c75495749202df9"
 SRCREPO="kernel/git/stable/linux-stable.git"
 SRCBRANCH = "linux-4.14.y"
 
