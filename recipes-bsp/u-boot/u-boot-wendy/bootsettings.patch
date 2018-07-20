@@ -1,8 +1,8 @@
 diff --git a/cmd/source.c b/cmd/source.c
-index a9831b6608..d0f1dfacc3 100644
+index 92481c4fff..fc026a5e01 100644
 --- a/cmd/source.c
 +++ b/cmd/source.c
-@@ -43,6 +43,7 @@ source (ulong addr, const char *fit_uname)
+@@ -42,6 +42,7 @@ source (ulong addr, const char *fit_uname)
  	verify = env_get_yesno("verify");
  
  	buf = map_sysmem(addr, 0);
@@ -11,25 +11,23 @@ index a9831b6608..d0f1dfacc3 100644
  #if defined(CONFIG_IMAGE_FORMAT_LEGACY)
  	case IMAGE_FORMAT_LEGACY:
 diff --git a/include/config_fallbacks.h b/include/config_fallbacks.h
-index 2c4d43d672..c1009c3052 100644
+index c18f19a550..45cc31b46e 100644
 --- a/include/config_fallbacks.h
 +++ b/include/config_fallbacks.h
-@@ -96,6 +96,8 @@
- 
- #ifdef CONFIG_DISABLE_IMAGE_LEGACY
- #undef CONFIG_IMAGE_FORMAT_LEGACY
-+#else
-+#define CONFIG_IMAGE_FORMAT_LEGACY
+@@ -52,4 +52,6 @@
+ # endif
  #endif
  
- #ifdef CONFIG_DM_I2C
++#define CONFIG_IMAGE_FORMAT_LEGACY
++
+ #endif	/* __CONFIG_FALLBACKS_H */
 diff --git a/include/configs/am335x_evm.h b/include/configs/am335x_evm.h
-index 856c546fc1..a7bbbc185a 100644
+index ff87adcd49..b3bc8041eb 100644
 --- a/include/configs/am335x_evm.h
 +++ b/include/configs/am335x_evm.h
-@@ -82,13 +82,67 @@
- 	func(PXE, pxe, na) \
- 	func(DHCP, dhcp, na)
+@@ -93,13 +93,67 @@
+ 	BOOT_TARGET_PXE(func) \
+ 	BOOT_TARGET_DHCP(func)
  
 +#if 0
  #include <config_distro_bootcmd.h>
