@@ -5,7 +5,7 @@ SUMMARY = "Linux Kernel for Wendy Board"
 DESCRIPTION = "Linux Kernel for Wendy Board"
 LICENSE = "GPL-2.0"
 
-LIC_FILES_CHKSUM = "file://COPYING;md5=d7810fab7487fb0aad327b76f1be7cd7"
+LIC_FILES_CHKSUM = "file://COPYING;md5=bbea815ee2795b2f4230826c0c6b8814"
 
 # Pick up shared functions
 inherit kernel
@@ -15,9 +15,9 @@ DEPENDS += "lzop-native bc-native bootscript-${MACHINE}-${WANTED_ROOT_DEV}"
 RDEPENDS_${KERNEL_PACKAGE_NAME}-image_append = "\
   bootscript-${MACHINE}-${WANTED_ROOT_DEV}"
 
-REV="33445c07cd45541410fb4cabd08b10827764c07f"
+REV="def4c11b31312777a8db1f1083e0d4bc6c9bbef0"
 SRCREPO="kernel/git/stable/linux-stable.git"
-SRCBRANCH = "linux-4.14.y"
+SRCBRANCH = "linux-4.19.y"
 
 SRC_URI = "git://git.kernel.org/pub/scm/linux/${SRCREPO};branch=${SRCBRANCH};rev=${REV} \
 	   file://defconfig \
