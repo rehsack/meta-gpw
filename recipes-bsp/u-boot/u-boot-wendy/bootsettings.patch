@@ -1,15 +1,3 @@
-diff --git a/cmd/source.c b/cmd/source.c
-index 92481c4fff..fc026a5e01 100644
---- a/cmd/source.c
-+++ b/cmd/source.c
-@@ -42,6 +42,7 @@ source (ulong addr, const char *fit_uname)
- 	verify = env_get_yesno("verify");
- 
- 	buf = map_sysmem(addr, 0);
-+	printf ("img format: %d\n", genimg_get_format(buf));
- 	switch (genimg_get_format(buf)) {
- #if defined(CONFIG_IMAGE_FORMAT_LEGACY)
- 	case IMAGE_FORMAT_LEGACY:
 diff --git a/include/config_fallbacks.h b/include/config_fallbacks.h
 index c18f19a550..45cc31b46e 100644
 --- a/include/config_fallbacks.h
