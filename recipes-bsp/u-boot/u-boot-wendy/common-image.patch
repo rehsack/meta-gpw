@@ -1,0 +1,32 @@
+diff --git a/common/image.c b/common/image.c
+index f17fa40c49..cde208468f 100644
+--- a/common/image.c
++++ b/common/image.c
+@@ -983,13 +983,10 @@ ulong genimg_get_kernel_addr(char * const img_addr)
+  */
+ int genimg_get_format(const void *img_addr)
+ {
+-#if CONFIG_IS_ENABLED(LEGACY_IMAGE_FORMAT)
++#ifdef CONFIG_LEGACY_IMAGE_FORMAT
+ 	const image_header_t *hdr;
+-
+-	hdr = (const image_header_t *)img_addr;
+-	if (image_check_magic(hdr))
+-		return IMAGE_FORMAT_LEGACY;
+ #endif
++
+ #if IMAGE_ENABLE_FIT || IMAGE_ENABLE_OF_LIBFDT
+ 	if (fdt_check_header(img_addr) == 0)
+ 		return IMAGE_FORMAT_FIT;
+@@ -998,6 +995,11 @@ int genimg_get_format(const void *img_addr)
+ 	if (android_image_check_header(img_addr) == 0)
+ 		return IMAGE_FORMAT_ANDROID;
+ #endif
++#ifdef CONFIG_LEGACY_IMAGE_FORMAT
++	hdr = (const image_header_t *)img_addr;
++	if (image_check_magic(hdr))
++		return IMAGE_FORMAT_LEGACY;
++#endif
+ 
+ 	return IMAGE_FORMAT_INVALID;
+ }
