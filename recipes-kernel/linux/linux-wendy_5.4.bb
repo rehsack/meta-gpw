@@ -15,10 +15,10 @@ DEPENDS += "lzop-native bc-native bootscript-${MACHINE}-${WANTED_ROOT_DEV}"
 RDEPENDS_${KERNEL_PACKAGE_NAME}-image_append = "\
   bootscript-${MACHINE}-${WANTED_ROOT_DEV}"
 
-REV="7d194c2100ad2a6dded545887d02754948ca5241"
+REV="5825c88e96518d8793f99e8c70aa0b0396642b45"
 SRCREPO="kernel/git/stable/linux-stable.git"
-#SRCBRANCH = "linux-5.4.y"
-SRCBRANCH = "master"
+SRCBRANCH = "linux-5.4.y"
+#SRCBRANCH = "master"
 
 SRC_URI = "git://git.kernel.org/pub/scm/linux/${SRCREPO};branch=${SRCBRANCH};rev=${REV} \
 	   file://defconfig \
