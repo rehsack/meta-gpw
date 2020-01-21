@@ -48,7 +48,9 @@ do_install () {
            -e "s/@MACHINE[@]/${MACHINE}/g" -e "s/@BRANCH[@]/${METADATA_BRANCH}/g" \
          ${WORKDIR}/${DEFAULT_BOOTSCRIPT}
     install -d ${D}/boot
-    uboot-mkimage -T script -C none -n 'Wendy Script' -d ${WORKDIR}/${DEFAULT_BOOTSCRIPT} ${D}/boot/bootscript.${WANTED_ROOT_DEV}
+    target_arch="${TARGET_ARCH}"
+    test "${TARGET_ARCH}" = "aarch64" && target_arch="arm64"
+    uboot-mkimage -A ${target_arch} -T script -C none -n 'Wendy Script' -d ${WORKDIR}/${DEFAULT_BOOTSCRIPT} ${D}/boot/bootscript.${WANTED_ROOT_DEV}
 }
 
 FILES_${PN} += "/boot/bootscript*"
