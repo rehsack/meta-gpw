@@ -33,8 +33,16 @@ do_install () {
     test -z "${console_baud}" && console_baud="9600"
     DEFAULT_BOOTSCRIPT="bootscript.mmc"
     test -f ${WORKDIR}/bootscript.${WANTED_ROOT_DEV} && DEFAULT_BOOTSCRIPT="bootscript.${WANTED_ROOT_DEV}"
+    kernel_devicetree_spc=""
+    kernel_devicetree_tmp=""
+    for kdt in ${KERNEL_DEVICETREE}
+    do
+        kernel_devicetree_tmp="${kernel_devicetree_tmp}${kernel_devicetree_spc}$(basename ${kdt})"
+        kernel_devicetree_spc=" "
+    done
+    kernel_devicetree="${kernel_devicetree_tmp}"
     sed -i -e "s/@UBOOT_LOADADDRESS[@]/${UBOOT_LOADADDRESS}/g" -e "s/@UBOOT_FDTADDRESS[@]/${UBOOT_FDTADDRESS}/g" \
-           -e "s/@KERNEL_IMAGETYPE[@]/${KERNEL_IMAGETYPE}/g" -e "s/@KERNEL_DEVICETREE[@]/${KERNEL_DEVICETREE}/g" \
+           -e "s/@KERNEL_IMAGETYPE[@]/${KERNEL_IMAGETYPE}/g" -e "s/@KERNEL_DEVICETREE[@]/${kernel_devicetree}/g" \
            -e "s/@ROOT_DEV_NAME[@]/${ROOT_DEV_NAME}/g" -e "s/@ROOT_DEV_SEP[@]/${ROOT_DEV_SEP}/g" \
            -e "s/@UBOOT_MMC_DEV[@]/${UBOOT_MMC_DEV}/g" \
            -e "s/@MACHINE[@]/${MACHINE}/g" -e "s/@BRANCH[@]/${METADATA_BRANCH}/g" \
