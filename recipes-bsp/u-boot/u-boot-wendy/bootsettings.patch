@@ -2,7 +2,7 @@ diff --git a/include/configs/am335x_evm.h b/include/configs/am335x_evm.h
 index ff87adcd49..b3bc8041eb 100644
 --- a/include/configs/am335x_evm.h
 +++ b/include/configs/am335x_evm.h
-@@ -93,13 +93,67 @@
+@@ -93,13 +93,68 @@
  	BOOT_TARGET_PXE(func) \
  	BOOT_TARGET_DHCP(func)
  
@@ -32,6 +32,7 @@ index ff87adcd49..b3bc8041eb 100644
 +        "script=bootscript\0" \
 +        "console=ttyS0\0" \
 +        "baudrate=115200\0" \
++        "ip_dyn=yes\0" \
 +        "bootargs_base=console=${console},${baudrate} oops=panic panic=5 rootwait consoleblank=0\0" \
 +        DEFAULT_EMMC_DEV_SET \
 +        "sdloadbootscript=" \
@@ -43,7 +44,7 @@ index ff87adcd49..b3bc8041eb 100644
 +        "bootscript=echo Running bootscript ...; " \
 +                "source ${scriptaddr}\0" \
 +        "netboot=echo Booting from net ...; " \
-+                "if test ${ip_dyn} = yes; then " \
++                "if test \"${ip_dyn}\" = yes; then " \
 +                        "dhcp $scriptaddr; " \
 +                "fi; " \
 +                "run bootscript;\0"
