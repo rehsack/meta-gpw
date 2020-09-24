@@ -7,7 +7,7 @@ LICENSE = "GPL-2.0"
 
 LIC_FILES_CHKSUM = "file://COPYING;md5=bbea815ee2795b2f4230826c0c6b8814"
 
-LINUX_VERSION = "5.4.63"
+LINUX_VERSION = "5.4.67"
 
 # Pick up shared functions
 inherit kernel
@@ -17,12 +17,13 @@ DEPENDS += "lzop-native bc-native bootscript-${MACHINE}-${WANTED_ROOT_DEV}"
 RDEPENDS_${KERNEL_PACKAGE_NAME}-image_append = "\
   bootscript-${MACHINE}-${WANTED_ROOT_DEV}"
 
-REV="e32f4fa1b24d825b2560ca9cfbfd9df44a4310b4"
+REV="a4bea6a4f1e0e5132fdedb5c0a74cbba696342fd"
 SRCREPO="kernel/git/stable/linux-stable.git"
 SRCBRANCH = "linux-5.4.y"
 #SRCBRANCH = "master"
 
 SRC_URI = "git://git.kernel.org/pub/scm/linux/${SRCREPO};branch=${SRCBRANCH};rev=${REV} \
+	   file://0001-perf-cs-etm-Move-definition-of-traceid_list-global-v.patch \
 	   file://defconfig \
           "
 
