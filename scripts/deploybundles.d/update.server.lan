@@ -1,0 +1,6 @@
+for TARGET in ${UPDATABLE_BUNDLE_DEPLOY_TARGETS}
+do
+    mkdir -p ${UPDATABLE_BUNDLE_DEPLOY_BASE}/${TARGET}/nightly
+    echo "${MANIFEST}" > ${UPDATABLE_BUNDLE_DEPLOY_BASE}/${TARGET}/nightly/manifest.json
+    (cd ${DEPLOY_DIR_IMAGE_BASE} && tar cf - ${BUNDLE_LIST}) | (cd ${UPDATABLE_BUNDLE_DEPLOY_BASE}/${TARGET}/nightly && tar xf -)
+done
