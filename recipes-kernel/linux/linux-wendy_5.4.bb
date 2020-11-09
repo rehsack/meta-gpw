@@ -7,7 +7,7 @@ LICENSE = "GPL-2.0"
 
 LIC_FILES_CHKSUM = "file://COPYING;md5=bbea815ee2795b2f4230826c0c6b8814"
 
-LINUX_VERSION = "5.4.68"
+LINUX_VERSION = "5.4.69"
 
 # Pick up shared functions
 inherit kernel
@@ -17,7 +17,7 @@ DEPENDS += "lzop-native bc-native bootscript-${MACHINE}-${WANTED_ROOT_DEV}"
 RDEPENDS_${KERNEL_PACKAGE_NAME}-image_append = "\
   bootscript-${MACHINE}-${WANTED_ROOT_DEV}"
 
-REV="5d087e3578cf9cbd850a6f0a5c8b8169f22b5272"
+REV="a9518c1aec5b6a8e1a04bbd54e6ba9725ef0db4c"
 SRCREPO="kernel/git/stable/linux-stable.git"
 SRCBRANCH = "linux-5.4.y"
 #SRCBRANCH = "master"
