@@ -1,0 +1,4 @@
+if test "${DEVELOPER_BUILD_SUCCEEDED}" = "1" -a "${WANTED_ROOT_DEV}" = "nfs"
+then
+	:
+fi
