@@ -1,4 +1,4 @@
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}-${MACHINE}:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}-${MACHINE}:"
 
 SRC_URI += "\
 	file://bootsettings.patch \

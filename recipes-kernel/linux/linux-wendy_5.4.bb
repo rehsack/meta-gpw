@@ -14,7 +14,7 @@ inherit kernel
 
 PROVIDES += "virtual/kernel"
 DEPENDS += "lzop-native bc-native bootscript-${MACHINE}-${WANTED_ROOT_DEV}"
-RDEPENDS_${KERNEL_PACKAGE_NAME}-image_append = "\
+RDEPENDS_${KERNEL_PACKAGE_NAME}-image:append = "\
   bootscript-${MACHINE}-${WANTED_ROOT_DEV}"
 
 REV="6e97ed6efa701db070da0054b055c085895aba86"
@@ -49,7 +49,7 @@ kernel_conf_variable() {
 	fi
 }
 
-do_configure_prepend() {
+do_configure:prepend() {
 	echo "" > ${B}/.config
 	CONF_SED_SCRIPT=""
 

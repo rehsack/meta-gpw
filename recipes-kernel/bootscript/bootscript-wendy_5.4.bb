@@ -16,7 +16,7 @@ PACKAGE_ARCH = "${MACHINE_ARCH}-${WANTED_ROOT_DEV}"
 DEPENDS = "u-boot-mkimage-native"
 RDEPENDS_${PN} = "u-boot"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/bootscript-${MACHINE}-${PV}:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/bootscript-${MACHINE}-${PV}:"
 
 SRC_URI = "file://bootscript.mmc \
            file://bootscript.usb \
